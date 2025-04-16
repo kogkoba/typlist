@@ -1,7 +1,7 @@
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQiPjinpplwJNlxfsnVPTBOg-q7fPk_Zv7l2Qyq443ISc_ahQxhcpzcQ31HncXZlHGKRy36LKVVixaA/pub?output=csv';
 
 // GASのWebアプリURL（デプロイ後に取得したURLに置き換えてください）
-const gasUrl = 'https://script.google.com/macros/s/AKfycbxXXXXXXX/exec';
+const gasUrl = 'https://script.google.com/macros/s/AKfycbwLvBnSRl6GMMMGD8PlyUrHJsN9nbQ6oym5TAukvkICsNjr_zo7uJm6S4chUJ0jsTBh/exec';
 
 // logWrongAnswer 関数を定義
 function logWrongAnswer(question, correctAnswer, userAnswer) {
