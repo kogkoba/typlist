@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const modeSelect = document.getElementById('mode-select');
 
   // 出題モードに応じて問題を絞り込む
-  function getFilteredProblems() {
+function getFilteredProblems() {
   const mode = modeSelect.value;
   if (mode === 'all') {
     return problems;
@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   return problems;
 }
+
 
 
   // ランダムに1問出す
