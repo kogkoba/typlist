@@ -76,14 +76,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 出題モードに応じて問題を絞り込む
   function getFilteredProblems() {
-    const mode = modeSelect.value;
-    if (mode === 'all') {
-      return problems;
-    } else if (mode === 'unanswered') {
-      return problems.filter(p => p.mistakeCount === 0 || p.correctCount === 0);
-    }
+  const mode = modeSelect.value;
+  if (mode === 'all') {
     return problems;
+  } else if (mode === 'unanswered') {
+    // ✅ 正解したことが一度もない問題だけを出題
+    return problems.filter(p => p.correctCount === 0);
   }
+  return problems;
+}
+
 
   // ランダムに1問出す
   function getRandomProblem() {
