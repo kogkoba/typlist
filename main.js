@@ -96,15 +96,21 @@ function getFilteredProblems() {
   }
 
   // 出題
-  function setNewProblem() {
-    currentProblem = getRandomProblem();
-    if (!currentProblem) {
-      questionDisplay.textContent = "出題できる問題がありません";
-      return;
-    }
-    questionDisplay.textContent = currentProblem.question;
+function setNewProblem() {
+  const filtered = getFilteredProblems();
+
+  if (filtered.length === 0) {
+    questionDisplay.textContent = "出題できる問題がありません（全て正解済み）";
     userInput.value = '';
+    currentProblem = null;
+    return;
   }
+
+  currentProblem = filtered[Math.floor(Math.random() * filtered.length)];
+  questionDisplay.textContent = currentProblem.question;
+  userInput.value = '';
+}
+
 
   setNewProblem();
 
