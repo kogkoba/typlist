@@ -17,26 +17,26 @@ const gasUrl = 'https://script.google.com/macros/s/AKfycbzenv9k1TnemXyQCyH2zloq4
 /* ----------------- GAS誤答ログ送信関数 ----------------- */
 /* ユーザーが誤答した場合、GASへPOSTリクエストを送信して
    誤答ログを記録するための関数です。 */
-function logWrongAnswer(question, correctAnswer, userAnswer) {
+
+function logWrongAnswer(problemId, correctAnswer, userAnswer) {
   fetch(gasUrl, {
     method: 'POST',
-    mode: 'no-cors', // CORS対策（必要に応じて調整）
+    mode: 'no-cors',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      problemText: question,        // 誤答対象の問題文
-      correctAnswer: correctAnswer, // ひらがな正解（比較用）
-      userAnswer: userAnswer        // ユーザーが入力した誤答
+      problemId: problemId,  // ← IDを送信
+      correctAnswer: correctAnswer,
+      userAnswer: userAnswer
     })
   })
-  .then(response => {
-    console.log('ログ送信完了');
-  })
-  .catch(error => {
-    console.error('ログ送信エラー:', error);
-  });
+  .then(() => console.log('ログ送信完了'))
+  .catch(error => console.error('ログ送信エラー:', error));
 }
+
+
+
 
 /* ----------------- CSVパース関数 ----------------- */
 /* CSVデータを配列に変換する関数です。  
@@ -50,12 +50,13 @@ function parseCSV(data) {
     .map(line => {
       const parts = line.split(',');
       if (parts.length < 2) return null;
-      return {
-        question: parts[0].trim(),                         // 問題文
-        answer: parts[1].trim(),                             // 正解（ひらがな入力用）
-        displayAnswer: (parts.length >= 3 ? parts[2].trim()   // 漢字表記（表示用）
-                         : parts[1].trim())
-      };
+return {
+  id: parts[0].trim(),                 // ← ID追加
+  question: parts[1].trim(),           // 問題文
+  answer: parts[2].trim(),             // ひらがな解答
+  displayAnswer: parts[3]?.trim() || parts[2].trim() // 漢字解答または fallback
+};
+
     })
     .filter(item => item !== null);
 }
@@ -115,7 +116,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 不正解の場合の処理
         questionDisplay.textContent = "不正解…　正解は：" + currentProblem.displayAnswer;
         // 誤答ログを送信
-        logWrongAnswer(currentProblem.question, currentProblem.answer, userAnswer);
+logWrongAnswer(currentProblem.id, currentProblem.answer, userAnswer);
       }
       
       // 2秒後に次の問題へ移行（演出用タイムアウト）
