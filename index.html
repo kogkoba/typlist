@@ -8,6 +8,13 @@
   <body>
     <h1>タイピングクイズゲーム</h1>
     <div id="game-container">
+      <!-- モード選択のドロップダウン -->
+      <select id="mode-select">
+        <option value="all">全問モード</option>
+        <option value="unanswered">未回答モード</option>
+        <option value="wrong">間違えたもののみ</option>
+      </select>
+
       <!-- クイズの問題文を表示する要素 -->
       <p id="question-display">ここに単語が表示されます</p>
 
