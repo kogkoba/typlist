@@ -53,11 +53,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   currentProblem = getRandomProblem();
   questionDisplay.textContent = currentProblem.question;
 
-  userInput.addEventListener('keyup', () => {
-    // ユーザー入力と回答を比較
-    if (userInput.value.trim() === currentProblem.answer) {
-      score++;
-      scoreDisplay.textContent = 'Score: ' + score;
+ // ユーザー入力のイベントリスナー（keydownでEnterキー検知）
+  userInput.addEventListener('keydown', function(event) {
+    if (event.key === "Enter") {
+      const userAnswer = userInput.value.trim();
+
+      // 正解の場合の処理
+      if (userAnswer === currentProblem.answer) {
+        score++;
+        scoreDisplay.textContent = 'Score: ' + score;
+      } else {
+        // ※ここで誤答のログを送信
+        // ※logWrongAnswer関数はあらかじめ実装してGASにPOSTする関数です
+        logWrongAnswer(currentProblem.question, currentProblem.answer, userAnswer);
+      }
+
 
       // 次の問題へ
       currentProblem = getRandomProblem();
