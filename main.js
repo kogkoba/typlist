@@ -23,6 +23,7 @@ function logWrongAnswer(problemId, correctAnswer, userAnswer) {
       problemId: problemId,
       correctAnswer: correctAnswer,
       userAnswer: userAnswer
+      
     })
   }).then(() => {
     console.log('ログ送信完了');
@@ -30,7 +31,21 @@ function logWrongAnswer(problemId, correctAnswer, userAnswer) {
     console.error('ログ送信失敗:', err);
   });
 }
-
+// ✅ 正解のときのログ送信（この関数を追加！）
+function logCorrectAnswer(problemId) {
+  fetch(gasUrl, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ correctId: problemId })
+  })
+  .then(() => {
+    console.log('✅ 正解ログ送信完了');
+  })
+  .catch(error => {
+    console.error('⚠️ 正解ログ送信エラー:', error);
+  });
+}
 /* ----------------- CSV読み込み＆パース ----------------- */
 function parseCSV(data) {
   return data
@@ -101,6 +116,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         score++;
         scoreDisplay.textContent = 'Score: ' + score;
         questionDisplay.textContent = "正解！ 答え：" + currentProblem.displayAnswer;
+         // ✅ 正解ログを送信（←ここに追加！）
+  logCorrectAnswer(currentProblem.id);
+}
       } else {
         questionDisplay.textContent = "不正解… 正解は：" + currentProblem.displayAnswer;
         logWrongAnswer(currentProblem.id, currentProblem.answer, userAnswer);
