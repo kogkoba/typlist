@@ -25,7 +25,7 @@ function logWrongAnswer(question, correctAnswer, userAnswer) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      question: question,         // 誤答対象の問題文
+      problemText: question,        // 誤答対象の問題文
       correctAnswer: correctAnswer, // ひらがな正解（比較用）
       userAnswer: userAnswer        // ユーザーが入力した誤答
     })
