@@ -112,17 +112,19 @@ document.addEventListener('DOMContentLoaded', async () => {
   userInput.addEventListener('keydown', (e) => {
     if (e.key === "Enter") {
       const userAnswer = userInput.value.trim();
-      if (userAnswer === currentProblem.answer) {
-        score++;
-        scoreDisplay.textContent = 'Score: ' + score;
-        questionDisplay.textContent = "正解！ 答え：" + currentProblem.displayAnswer;
-         // ✅ 正解ログを送信（←ここに追加！）
+     if (userAnswer === currentProblem.answer) {
+  score++;
+  scoreDisplay.textContent = 'Score: ' + score;
+  questionDisplay.textContent = "正解！ 答え：" + currentProblem.displayAnswer;
+
+  // ✅ 正解ログ送信
   logCorrectAnswer(currentProblem.id);
+
+} else {
+  questionDisplay.textContent = "不正解… 正解は：" + currentProblem.displayAnswer;
+  logWrongAnswer(currentProblem.id, currentProblem.answer, userAnswer);
 }
-      } else {
-        questionDisplay.textContent = "不正解… 正解は：" + currentProblem.displayAnswer;
-        logWrongAnswer(currentProblem.id, currentProblem.answer, userAnswer);
-      }
+
 
       // 2秒後に次の問題
       setTimeout(() => {
