@@ -21,12 +21,15 @@ function logCorrectAnswer(problemId) {
   });
 }
 
-// CSVをパース
 function parseCSV(data) {
-  return data
+  const lines = data
     .split('\n')
     .map(line => line.trim())
-    .filter(line => line !== '')
+    .filter(line => line !== '');
+
+  const rows = lines.slice(1); // ← 1行目（ヘッダー）を除外！
+
+  return rows
     .map(line => {
       const parts = line.split(',');
       if (parts.length < 4) return null;
@@ -41,6 +44,7 @@ function parseCSV(data) {
     })
     .filter(item => item !== null);
 }
+
 
 // 問題取得
 async function loadProblems() {
