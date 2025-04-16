@@ -20,14 +20,13 @@ function logCorrectAnswer(problemId) {
     body: JSON.stringify({ correctId: problemId })
   });
 }
-
 function parseCSV(data) {
   const lines = data
     .split('\n')
     .map(line => line.trim())
     .filter(line => line !== '');
 
-  const rows = lines.slice(1); // ← 1行目（ヘッダー）を除外！
+  const rows = lines.slice(1); // ← ヘッダー除外
 
   return rows
     .map(line => {
@@ -38,8 +37,8 @@ function parseCSV(data) {
         question: parts[1].trim(),
         answer: parts[2].trim(),
         displayAnswer: parts[3]?.trim() || parts[2].trim(),
-        mistakeCount: Number(parts[4]) || 0,
-        correctCount: Number(parts[5]) || 0
+        mistakeCount: Number(parts[4]?.trim()) || 0,
+        correctCount: Number(parts[5]?.trim()) || 0
       };
     })
     .filter(item => item !== null);
