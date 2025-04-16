@@ -2,19 +2,21 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8">
-    <title>タイピングゲーム</title>
+    <title>タイピングクイズゲーム</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>タイピングゲーム</h1>
+    <h1>タイピングクイズゲーム</h1>
     <div id="game-container">
+      <!-- クイズの問題文を表示する要素 -->
       <p id="question-display">ここに単語が表示されます</p>
-      <input type="text" id="user-input" placeholder="ここに入力してください">
+
+      <!-- ユーザが回答を入力する要素 -->
+      <input type="text" id="user-input" placeholder="答えを入力してください" />
+
+      <!-- スコアを表示する要素 -->
       <p id="score">Score: 0</p>
     </div>
-    
-    <!-- main.jsを読み込む -->
     <script src="main.js"></script>
   </body>
 </html>
-
