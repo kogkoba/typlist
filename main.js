@@ -1,5 +1,30 @@
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQiPjinpplwJNlxfsnVPTBOg-q7fPk_Zv7l2Qyq443ISc_ahQxhcpzcQ31HncXZlHGKRy36LKVVixaA/pub?output=csv';
 
+// GASのWebアプリURL（デプロイ後に取得したURLに置き換えてください）
+const gasUrl = 'https://script.google.com/macros/s/AKfycbxXXXXXXX/exec';
+
+// logWrongAnswer 関数を定義
+function logWrongAnswer(question, correctAnswer, userAnswer) {
+  fetch(gasUrl, {
+    method: 'POST',
+    mode: 'no-cors', // CORS対策（必要ならサーバー側と調整してください）
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      question: question,
+      correctAnswer: correctAnswer,
+      userAnswer: userAnswer
+    })
+  })
+  .then(response => {
+    console.log('ログ送信完了');
+  })
+  .catch(error => {
+    console.error('ログ送信エラー:', error);
+  });
+}
+
 function parseCSV(data) {
   return data
     .split('\n')
